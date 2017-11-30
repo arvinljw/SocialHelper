@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SocialHelper</string>
+    <string name="social_cancel">已取消</string>
+    <string name="social_share_error">分享失败</string>
+    <string name="social_error">获取信息失败</string>
+    <string name="social_qq_uninstall">QQ未安装</string>
+    <string name="social_wx_uninstall">微信未安装</string>
+    <string name="social_wb_uninstall">微博未安装</string>
+    <string name="social_img_not_found">分享图片未找到</string>
+    <string name="social_wx_version_low_error">微信4.2以上才支持分享朋友圈，请升级微信</string>
+</resources>

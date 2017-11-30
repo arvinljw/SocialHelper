@@ -1,0 +1,25 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion projectCompileSdkVersion as int
+    buildToolsVersion projectBuildToolsVersion
+
+    defaultConfig {
+        minSdkVersion projectMinSdkVersion as int
+        targetSdkVersion projectTargetSdkVersion as int
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:'.concat(projectSupportVersion)
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:1.4.0'
+    compile 'com.sina.weibo.sdk:core:4.1.0:openDefaultRelease@aar'
+    compile 'com.google.code.gson:gson:2.8.1'
+}
