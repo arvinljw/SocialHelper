@@ -9,5 +9,4 @@ import net.arvin.socialhelper.entities.ThirdInfoEntity;
  */
 public interface SocialLoginCallback extends SocialCallback{
     void loginSuccess(ThirdInfoEntity info);
-
 }

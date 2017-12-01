@@ -21,6 +21,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:'.concat(projectSupportVersion)
-    compile project(':socialhelper')
-//    compile 'com.github.arvinljw:SocialHelper:v1.0.3'
+//    compile project(':socialhelper')
+    compile ('com.github.arvinljw:SocialHelper:v1.0.4'){
+        exclude group: 'com.android.support'
+    }
 }
