@@ -139,7 +139,7 @@ final class QQHelper implements ISocial {
     @Override
     public void share(SocialShareCallback callback, ShareEntity shareInfo) {
         this.shareCallback = callback;
-        if (!tencent.isQQInstalled(activity)) {
+        if (!SocialUtil.isQQInstalled(activity)) {
             if (callback != null) {
                 callback.socialError(activity.getString(R.string.social_qq_uninstall));
             }

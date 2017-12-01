@@ -3,10 +3,6 @@ package net.arvin.socialhelper.sample;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import net.arvin.socialhelper.R;
-
-import java.util.Locale;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override

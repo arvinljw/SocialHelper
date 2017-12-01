@@ -1,11 +1,14 @@
 package net.arvin.socialhelper;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -86,5 +89,21 @@ final class SocialUtil {
         }
 
         return result;
+    }
+    /**
+     * 是否安装qq
+     */
+    static boolean isQQInstalled(Context context) {
+        final PackageManager packageManager = context.getPackageManager();
+        List<PackageInfo> packageInfo = packageManager.getInstalledPackages(0);
+        if (packageInfo != null) {
+            for (int i = 0; i < packageInfo.size(); i++) {
+                String pn = packageInfo.get(i).packageName;
+                if (pn.equals("com.tencent.mobileqq")) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
