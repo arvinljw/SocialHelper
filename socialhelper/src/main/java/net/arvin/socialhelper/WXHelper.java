@@ -370,6 +370,9 @@ final class WXHelper implements ISocial {
             if (wxAuthReceiver != null) {
                 activity.unregisterReceiver(wxAuthReceiver);
             }
+            if (wxShareReceiver != null) {
+                activity.unregisterReceiver(wxShareReceiver);
+            }
             activity = null;
         }
     }
