@@ -73,14 +73,15 @@ final class SocialUtil {
                 height = 150;
             }
             newBmp = Bitmap.createScaledBitmap(bmp, width, height, true);
-            bmp.recycle();
         } else {
             newBmp = bmp;
         }
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         newBmp.compress(Bitmap.CompressFormat.JPEG, 100, output);
         newBmp.recycle();
-
+        if (bmp != null && !bmp.isRecycled()) {
+            bmp.recycle();
+        }
         byte[] result = output.toByteArray();
         try {
             output.close();
