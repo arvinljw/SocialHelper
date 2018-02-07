@@ -366,12 +366,26 @@ final class WXHelper implements ISocial {
 
     @Override
     public void onDestroy() {
-        if (activity != null) {
+         if (activity != null) {
             if (wxAuthReceiver != null) {
-                activity.unregisterReceiver(wxAuthReceiver);
+                Intent intent = new Intent();
+                intent.setAction(SocialHelper.WX_AUTH_RECEIVER_ACTION);
+                PackageManager pm = activity.getPackageManager();
+                List<ResolveInfo> resolveInfos = pm.queryBroadcastReceivers(intent, 0);
+                if(resolveInfos != null && !resolveInfos.isEmpty()){
+                    activity.unregisterReceiver(wxAuthReceiver);
+                }
             }
             if (wxShareReceiver != null) {
-                activity.unregisterReceiver(wxShareReceiver);
+
+                Intent intent = new Intent();
+                intent.setAction(SocialHelper.WX_SHARE_RECEIVER_ACTION);
+                PackageManager pm = activity.getPackageManager();
+                List<ResolveInfo> resolveInfos = pm.queryBroadcastReceivers(intent, 0);
+                if(resolveInfos != null && !resolveInfos.isEmpty()){
+                    activity.unregisterReceiver(wxShareReceiver);
+                }
+
             }
             activity = null;
         }
