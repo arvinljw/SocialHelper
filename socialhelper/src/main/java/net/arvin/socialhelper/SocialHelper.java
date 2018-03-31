@@ -53,18 +53,39 @@ public final class SocialHelper {
         wbHelper.login(callback);
     }
 
+    public void shareQQ(Activity activity, ShareEntity shareInfo, SocialShareCallback callback) {
+        clear();
+        qqHelper = new QQHelper(activity, builder.getQqAppId());
+        qqHelper.share(callback, shareInfo);
+    }
+
+    public void shareWX(Activity activity, ShareEntity shareInfo, SocialShareCallback callback) {
+        clear();
+        wxHelper = new WXHelper(activity, builder.getWxAppId(), builder.getWxAppSecret());
+        wxHelper.share(callback, shareInfo);
+    }
+
+    public void shareWB(Activity activity, ShareEntity shareInfo, SocialShareCallback callback) {
+        clear();
+        wbHelper = new WBHelper(activity, builder.getWbAppId(), builder.getWbRedirectUrl());
+        wbHelper.share(callback, shareInfo);
+    }
+
+    @Deprecated
     public void shareQQ(Activity activity, SocialShareCallback callback, ShareEntity shareInfo) {
         clear();
         qqHelper = new QQHelper(activity, builder.getQqAppId());
         qqHelper.share(callback, shareInfo);
     }
 
+    @Deprecated
     public void shareWX(Activity activity, SocialShareCallback callback, ShareEntity shareInfo) {
         clear();
         wxHelper = new WXHelper(activity, builder.getWxAppId(), builder.getWxAppSecret());
         wxHelper.share(callback, shareInfo);
     }
 
+    @Deprecated
     public void shareWB(Activity activity, SocialShareCallback callback, ShareEntity shareInfo) {
         clear();
         wbHelper = new WBHelper(activity, builder.getWbAppId(), builder.getWbRedirectUrl());

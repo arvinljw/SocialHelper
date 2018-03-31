@@ -32,15 +32,15 @@ allprojects {
 ```
 dependencies {
     ...
-    compile 'com.github.arvinljw:SocialHelper:v1.0.5'
+    compile 'com.github.arvinljw:SocialHelper:v1.0.6'
 }
 ```
 
 *注：如果在该module中使用了v7包，那么可使用exclude命令移除本库的引用避免重复，gson也是一样，大体方法如下*
 
 ```
-compile ('com.github.arvinljw:SocialHelper:v1.0.5'){
-    exclude group: 'com.android.support'
+compile ('com.github.arvinljw:SocialHelper:v1.0.6'){
+    exclude group: 'com.google.code.gson'
 }
 ```
 
@@ -221,6 +221,18 @@ protected void onNewIntent(Intent intent) {
 至此使用方式就基本完毕，算下来也就这么四部配置，就能愉快的使用了，当然前提是相应的app申请已经成功。
 
 **其中对于SocialHelper的实例，可以像Demo中一样使用一个工具简单封装成单例来使用。**
+
+#### release log
+
+v1.0.6: 
+
+* 更新微信，qq，微博sdk版本
+* 调整SocialHelper中shareXX相关方法的参数顺序，老的方法Deprecated了，下个版本移除
+
+v1.0.5:
+
+* 第一个稳定版本，包含微信，qq，微博登录和分享
+
 
 #### 混淆
 
