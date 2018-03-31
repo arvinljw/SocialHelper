@@ -120,9 +120,11 @@ socialHelper = new SocialHelper.Builder()
 * public void loginQQ(Activity activity, SocialLoginCallback callback)
 * public void loginWX(Activity activity, SocialLoginCallback callback)
 * public void loginWB(Activity activity, SocialLoginCallback callback)
-* public void shareQQ(Activity activity, SocialShareCallback callback, ShareEntity shareInfo)
-* public void shareWX(Activity activity, SocialShareCallback callback, ShareEntity shareInfo)
-* public void shareWB(Activity activity, SocialShareCallback callback, ShareEntity shareInfo)
+* public void shareQQ(Activity activity, ShareEntity shareInfo, SocialShareCallback callback)
+* public void shareWX(Activity activity, ShareEntity shareInfo, SocialShareCallback callback)
+* public void shareWB(Activity activity, ShareEntity shareInfo, SocialShareCallback callback)
+
+*注：分享方法的参数顺序和老版本有一点变化，老版本的被遗弃了，计划下个版本删除*
 
 这个其实通过名字就能知道是什么意思，就不解释了，需要解释的是参数：
 
