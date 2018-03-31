@@ -222,14 +222,14 @@ protected void onNewIntent(Intent intent) {
 
 **其中对于SocialHelper的实例，可以像Demo中一样使用一个工具简单封装成单例来使用。**
 
-#### release log
+### Release Log
 
-v1.0.6: 
+**v1.0.6:**
 
 * 更新微信，qq，微博sdk版本
 * 调整SocialHelper中shareXX相关方法的参数顺序，老的方法Deprecated了，下个版本移除
 
-v1.0.5:
+**v1.0.5:**
 
 * 第一个稳定版本，包含微信，qq，微博登录和分享
 
