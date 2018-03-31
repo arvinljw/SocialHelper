@@ -32,15 +32,15 @@ allprojects {
 ```
 dependencies {
     ...
-    compile 'com.github.arvinljw:SocialHelper:v1.0.6'
+    compile 'com.github.arvinljw:SocialHelper:v1.0.7'
 }
 ```
 
 *注：如果在该module中使用了v7包，那么可使用exclude命令移除本库的引用避免重复，gson也是一样，大体方法如下*
 
 ```
-compile ('com.github.arvinljw:SocialHelper:v1.0.6'){
-    exclude group: 'com.google.code.gson'
+compile ('com.github.arvinljw:SocialHelper:v1.0.7'){
+    exclude group: 'com.android.support'
 }
 ```
 
@@ -224,7 +224,7 @@ protected void onNewIntent(Intent intent) {
 
 ### Release Log
 
-**v1.0.6:**
+**v1.0.7:**
 
 * 更新微信，qq，微博sdk版本
 * 调整SocialHelper中shareXX相关方法的参数顺序，老的方法Deprecated了，下个版本移除
