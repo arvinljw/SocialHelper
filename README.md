@@ -32,14 +32,14 @@ allprojects {
 ```
 dependencies {
     ...
-    compile 'com.github.arvinljw:SocialHelper:v1.0.7'
+    compile 'com.github.arvinljw:SocialHelper:v1.0.8'
 }
 ```
 
 *注：如果在该module中使用了v7包，那么可使用exclude命令移除本库的引用避免重复，gson也是一样，大体方法如下*
 
 ```
-compile ('com.github.arvinljw:SocialHelper:v1.0.7'){
+compile ('com.github.arvinljw:SocialHelper:v1.0.8'){
     exclude group: 'com.android.support'
 }
 ```
@@ -225,6 +225,12 @@ protected void onNewIntent(Intent intent) {
 **其中对于SocialHelper的实例，可以像Demo中一样使用一个工具简单封装成单例来使用。**
 
 ### Release Log
+
+**v1.0.8:**
+
+* 优化appId等参数为空是不抛异常，只打印日志，避免使用奔溃
+* 删除SocialHelper中上个版本Deprecate了的方法
+* 增加使用SocialHelper的[使用例子](https://github.com/arvinljw/SocialHelper/blob/master/app/src/main/java/net/arvin/socialhelper/sample/TestLoginShareActivity.java)，但是无法直接使用，因为各种appId不匹配，需要在自己的app中按需使用。
 
 **v1.0.7:**
 

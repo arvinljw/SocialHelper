@@ -20,6 +20,7 @@ android {
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     api 'com.android.support:appcompat-v7:'.concat(projectSupportVersion)
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
 //    compile project(':socialhelper')
     api ('com.github.arvinljw:SocialHelper:v1.0.7'){
         exclude group: 'com.android.support'
