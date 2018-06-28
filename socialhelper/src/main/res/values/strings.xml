@@ -9,4 +9,5 @@
     <string name="social_wb_uninstall">微博未安装</string>
     <string name="social_img_not_found">分享图片未找到</string>
     <string name="social_wx_version_low_error">微信4.2以上才支持分享朋友圈，请升级微信</string>
+    <string name="social_error_appid_empty">appId或appSecret或redirectUrl为空</string>
 </resources>

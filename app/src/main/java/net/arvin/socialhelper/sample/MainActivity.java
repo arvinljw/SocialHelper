@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import net.arvin.socialhelper.SocialHelper;
+import net.arvin.socialhelper.sample.utils.SocialUtil;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,14 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        socialHelper = new SocialHelper.Builder()
-                .setQqAppId("")
-                .setWxAppId("")
-                .setWxAppSecret("")
-                .setWbAppId("")
-                .setWbRedirectUrl("")
-                .build();
-
+        socialHelper = SocialUtil.getInstance().socialHelper();
     }
 
     @Override

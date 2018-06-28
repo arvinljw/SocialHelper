@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.sina.weibo.sdk.WbSdk;
@@ -30,6 +31,7 @@ import com.sina.weibo.sdk.share.WbShareCallback;
 import com.sina.weibo.sdk.share.WbShareHandler;
 import com.sina.weibo.sdk.utils.Utility;
 
+import net.arvin.socialhelper.callback.SocialCallback;
 import net.arvin.socialhelper.callback.SocialLoginCallback;
 import net.arvin.socialhelper.callback.SocialShareCallback;
 import net.arvin.socialhelper.entities.ShareEntity;
@@ -53,6 +55,7 @@ final class WBHelper implements ISocial {
 
     private Activity activity;
     private String appId;
+    private String redirectUrl;
     private SsoHandler mSsoHandler;
 
     private SocialLoginCallback loginCallback;
@@ -66,8 +69,10 @@ final class WBHelper implements ISocial {
     WBHelper(Activity activity, String appId, String redirectUrl) {
         this.activity = activity;
         this.appId = appId;
+        this.redirectUrl = redirectUrl;
         if (TextUtils.isEmpty(appId) || TextUtils.isEmpty(redirectUrl)) {
-            throw new RuntimeException("WeBo's appId or redirectUrl is empty!");
+            Log.w("WBHelper", "WeBo's appId or redirectUrl is empty!");
+            return;
         }
         WbSdk.install(activity.getApplicationContext(), new AuthInfo(activity.getApplicationContext(), appId, redirectUrl, SCOPE));
     }
@@ -78,9 +83,23 @@ final class WBHelper implements ISocial {
     @Override
     public void login(SocialLoginCallback callback) {
         this.loginCallback = callback;
+        if (baseVerify(callback)) {
+            return;
+        }
         initLoginListener();
         mSsoHandler = new SsoHandler(activity);
         mSsoHandler.authorize(wbAuthCallback);
+    }
+
+    /*基本信息验证*/
+    private boolean baseVerify(SocialCallback callback) {
+        if (TextUtils.isEmpty(appId) || TextUtils.isEmpty(redirectUrl)) {
+            if (callback != null) {
+                callback.socialError(activity.getString(R.string.social_error_appid_empty));
+            }
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -174,6 +193,9 @@ final class WBHelper implements ISocial {
     @Override
     public void share(SocialShareCallback callback, ShareEntity shareInfo) {
         this.shareCallback = callback;
+        if (baseVerify(callback)) {
+            return;
+        }
         if (!WbSdk.isWbInstall(activity)) {
             if (callback != null) {
                 callback.socialError(activity.getString(R.string.social_wb_uninstall));

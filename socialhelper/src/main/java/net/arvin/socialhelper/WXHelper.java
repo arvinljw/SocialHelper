@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
@@ -25,6 +26,7 @@ import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import net.arvin.socialhelper.callback.SocialCallback;
 import net.arvin.socialhelper.callback.SocialLoginCallback;
 import net.arvin.socialhelper.callback.SocialShareCallback;
 import net.arvin.socialhelper.entities.ShareEntity;
@@ -63,7 +65,8 @@ final class WXHelper implements ISocial {
         this.appSecret = appSecret;
 
         if (TextUtils.isEmpty(appId) || TextUtils.isEmpty(appSecret)) {
-            throw new RuntimeException("Wechat's appId or appSecret is empty!");
+            Log.w("WXHelper", "Wechat's appId or appSecret is empty!");
+            return;
         }
 
         api = WXAPIFactory.createWXAPI(activity, appId, true);
@@ -77,10 +80,7 @@ final class WXHelper implements ISocial {
     @Override
     public void login(SocialLoginCallback callback) {
         this.loginCallback = callback;
-        if (!api.isWXAppInstalled()) {
-            if (callback != null) {
-                callback.socialError(activity.getString(R.string.social_wx_uninstall));
-            }
+        if (baseVerify(callback)) {
             return;
         }
         initLoginReceiver();
@@ -179,10 +179,7 @@ final class WXHelper implements ISocial {
     @Override
     public void share(SocialShareCallback callback, ShareEntity shareInfo) {
         this.shareCallback = callback;
-        if (!api.isWXAppInstalled()) {
-            if (callback != null) {
-                callback.socialError(activity.getString(R.string.social_wx_uninstall));
-            }
+        if (baseVerify(callback)) {
             return;
         }
         //是否分享到朋友圈，微信4.2以下不支持朋友圈
@@ -342,6 +339,23 @@ final class WXHelper implements ISocial {
                 bitmap = BitmapFactory.decodeResource(activity.getResources(), params.getInt(WXShareEntity.KEY_WX_IMG_RES));
             }
             msg.thumbData = SocialUtil.bmpToByteArray(bitmap, true);
+        }
+        return false;
+    }
+
+    /*基本信息验证*/
+    private boolean baseVerify(SocialCallback callback) {
+        if (TextUtils.isEmpty(appId) || TextUtils.isEmpty(appSecret)) {
+            if (callback != null) {
+                callback.socialError(activity.getString(R.string.social_error_appid_empty));
+            }
+            return true;
+        }
+        if (!api.isWXAppInstalled()) {
+            if (callback != null) {
+                callback.socialError(activity.getString(R.string.social_wx_uninstall));
+            }
+            return true;
         }
         return false;
     }

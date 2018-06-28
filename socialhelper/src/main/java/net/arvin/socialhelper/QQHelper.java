@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.tencent.connect.UserInfo;
@@ -27,6 +28,7 @@ import net.arvin.socialhelper.entities.ThirdInfoEntity;
 final class QQHelper implements ISocial {
     private Activity activity;
     private Tencent tencent;
+    private String appId;
 
     private SocialLoginCallback loginCallback;
     private IUiListener loginListener;
@@ -38,8 +40,10 @@ final class QQHelper implements ISocial {
 
     QQHelper(Activity activity, String appId) {
         this.activity = activity;
+        this.appId = appId;
         if (TextUtils.isEmpty(appId)) {
-            throw new RuntimeException("QQ's appId is empty!");
+            Log.w("QQHelper", "QQ's appId is empty!");
+            return;
         }
         tencent = Tencent.createInstance(appId, activity.getApplicationContext());
     }
@@ -76,6 +80,9 @@ final class QQHelper implements ISocial {
     @Override
     public void login(SocialLoginCallback callback) {
         this.loginCallback = callback;
+        if (baseVerify(callback)) {
+            return;
+        }
         initLoginListener();
         if (!tencent.isSessionValid()) {
             tencent.login(activity, "all", loginListener);
@@ -139,6 +146,9 @@ final class QQHelper implements ISocial {
     @Override
     public void share(SocialShareCallback callback, ShareEntity shareInfo) {
         this.shareCallback = callback;
+        if (baseVerify(callback)) {
+            return;
+        }
         if (!SocialUtil.isQQInstalled(activity)) {
             if (callback != null) {
                 callback.socialError(activity.getString(R.string.social_qq_uninstall));
@@ -151,6 +161,17 @@ final class QQHelper implements ISocial {
         } else {
             tencent.shareToQzone(activity, shareInfo.getParams(), shareListener);
         }
+    }
+
+    /*基本信息验证*/
+    private boolean baseVerify(SocialCallback callback) {
+        if (TextUtils.isEmpty(appId)) {
+            if (callback != null) {
+                callback.socialError(activity.getString(R.string.social_error_appid_empty));
+            }
+            return true;
+        }
+        return false;
     }
 
     @Override

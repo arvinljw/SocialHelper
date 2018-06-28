@@ -71,27 +71,6 @@ public final class SocialHelper {
         wbHelper.share(callback, shareInfo);
     }
 
-    @Deprecated
-    public void shareQQ(Activity activity, SocialShareCallback callback, ShareEntity shareInfo) {
-        clear();
-        qqHelper = new QQHelper(activity, builder.getQqAppId());
-        qqHelper.share(callback, shareInfo);
-    }
-
-    @Deprecated
-    public void shareWX(Activity activity, SocialShareCallback callback, ShareEntity shareInfo) {
-        clear();
-        wxHelper = new WXHelper(activity, builder.getWxAppId(), builder.getWxAppSecret());
-        wxHelper.share(callback, shareInfo);
-    }
-
-    @Deprecated
-    public void shareWB(Activity activity, SocialShareCallback callback, ShareEntity shareInfo) {
-        clear();
-        wbHelper = new WBHelper(activity, builder.getWbAppId(), builder.getWbRedirectUrl());
-        wbHelper.share(callback, shareInfo);
-    }
-
     /**
      * qq登录和分享以及微博登录都需要在其当前的activity的onActivityResult中调用该方法
      */
