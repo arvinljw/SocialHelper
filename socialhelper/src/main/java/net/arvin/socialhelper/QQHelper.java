@@ -62,12 +62,12 @@ final class QQHelper implements ISocial {
         };
     }
 
-    private void initShareListener() {
+    private void initShareListener(final ShareEntity shareInfo) {
         shareListener = new NormalUIListener(activity, shareCallback) {
             @Override
             public void onComplete(Object o) {
                 if (shareCallback != null) {
-                    shareCallback.shareSuccess();
+                    shareCallback.shareSuccess(shareInfo.getType());
                 }
             }
         };
@@ -155,7 +155,7 @@ final class QQHelper implements ISocial {
             }
             return;
         }
-        initShareListener();
+        initShareListener(shareInfo);
         if (shareInfo.getType() == ShareEntity.TYPE_QQ) {
             tencent.shareToQQ(activity, shareInfo.getParams(), shareListener);
         } else {

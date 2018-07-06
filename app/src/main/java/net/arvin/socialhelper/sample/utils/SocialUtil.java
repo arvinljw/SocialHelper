@@ -7,12 +7,12 @@ import net.arvin.socialhelper.SocialHelper;
  * Function：
  * Desc：
  */
-public class SocialUtil {
-    private static SocialUtil sInstance = new SocialUtil();
+public enum SocialUtil {
+    INSTANCE();
 
-    private SocialHelper socialHelper;
+    public SocialHelper socialHelper;
 
-    private SocialUtil() {
+    SocialUtil() {
         socialHelper = new SocialHelper.Builder()
                 .setQqAppId("qqAppId")
                 .setWxAppId("wxAppId")
@@ -20,13 +20,5 @@ public class SocialUtil {
                 .setWbAppId("wbAppId")
                 .setWbRedirectUrl("wbRedirectUrl")
                 .build();
-    }
-
-    public static SocialUtil getInstance() {
-        return sInstance;
-    }
-
-    public SocialHelper socialHelper() {
-        return socialHelper;
     }
 }

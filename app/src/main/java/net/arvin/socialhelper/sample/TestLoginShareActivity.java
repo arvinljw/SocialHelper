@@ -37,7 +37,7 @@ public class TestLoginShareActivity extends AppCompatActivity implements View.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_login_share);
         setTitle("测试SocialHelper");
-        socialHelper = SocialUtil.getInstance().socialHelper();
+        socialHelper = SocialUtil.INSTANCE.socialHelper;
         initView();
         initEvent();
     }
@@ -168,7 +168,7 @@ public class TestLoginShareActivity extends AppCompatActivity implements View.On
     }
 
     @Override
-    public void shareSuccess() {
+    public void shareSuccess(int type) {
         Toast.makeText(this, "分享成功", Toast.LENGTH_SHORT).show();
     }
 

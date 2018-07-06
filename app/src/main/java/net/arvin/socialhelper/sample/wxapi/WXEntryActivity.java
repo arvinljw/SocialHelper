@@ -27,7 +27,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String wxAppId = SocialUtil.getInstance().socialHelper().getBuilder().getWxAppId();
+        String wxAppId = SocialUtil.INSTANCE.socialHelper.getBuilder().getWxAppId();
         api = WXAPIFactory.createWXAPI(this, wxAppId, true);
         api.registerApp(wxAppId);
 
@@ -52,15 +52,15 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
         if (baseResp.getType() == ConstantsAPI.COMMAND_SENDAUTH) {
             if (baseResp.errCode == BaseResp.ErrCode.ERR_OK) {
                 String code = ((SendAuth.Resp) baseResp).code;
-                SocialUtil.getInstance().socialHelper().sendAuthBackBroadcast(this, code);
+                SocialUtil.INSTANCE.socialHelper.sendAuthBackBroadcast(this, code);
             } else {
-                SocialUtil.getInstance().socialHelper().sendAuthBackBroadcast(this, null);
+                SocialUtil.INSTANCE.socialHelper.sendAuthBackBroadcast(this, null);
             }
         } else if (baseResp.getType() == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX) {
             if (baseResp.errCode == BaseResp.ErrCode.ERR_OK) {
-                SocialUtil.getInstance().socialHelper().sendShareBackBroadcast(this, true);
+                SocialUtil.INSTANCE.socialHelper.sendShareBackBroadcast(this, true);
             } else {
-                SocialUtil.getInstance().socialHelper().sendShareBackBroadcast(this, false);
+                SocialUtil.INSTANCE.socialHelper.sendShareBackBroadcast(this, false);
             }
         }
         onBackPressed();

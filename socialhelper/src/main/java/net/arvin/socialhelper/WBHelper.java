@@ -202,7 +202,7 @@ final class WBHelper implements ISocial {
             }
             return;
         }
-        initShareLister();
+        initShareLister(shareInfo);
         shareHandler = new WbShareHandler(activity);
         shareHandler.registerApp();
 
@@ -213,12 +213,12 @@ final class WBHelper implements ISocial {
         shareHandler.shareMessage(weiboMessage, false);
     }
 
-    private void initShareLister() {
+    private void initShareLister(final ShareEntity shareInfo) {
         wbShareCallback = new WbShareCallback() {
             @Override
             public void onWbShareSuccess() {
                 if (shareCallback != null) {
-                    shareCallback.shareSuccess();
+                    shareCallback.shareSuccess(shareInfo.getType());
                 }
             }
 

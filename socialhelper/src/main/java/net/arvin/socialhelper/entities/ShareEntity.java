@@ -16,9 +16,9 @@ public class ShareEntity {
      * type 值
      * qq==0
      * qzone==1
-     * 微信=＝2
-     * 朋友圈=＝3
-     * 微博=＝4
+     * 微信==2
+     * 朋友圈==3
+     * 微博==4
      */
     public static final int TYPE_QQ = 0;
     public static final int TYPE_Q_ZONE = 1;

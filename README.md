@@ -32,14 +32,14 @@ allprojects {
 ```
 dependencies {
     ...
-    compile 'com.github.arvinljw:SocialHelper:v1.0.8'
+    compile 'com.github.arvinljw:SocialHelper:v1.0.9'
 }
 ```
 
 *注：如果在该module中使用了v7包，那么可使用exclude命令移除本库的引用避免重复，gson也是一样，大体方法如下*
 
 ```
-compile ('com.github.arvinljw:SocialHelper:v1.0.8'){
+compile ('com.github.arvinljw:SocialHelper:v1.0.9'){
     exclude group: 'com.android.support'
 }
 ```
@@ -150,7 +150,7 @@ public interface SocialLoginCallback extends SocialCallback{
 }
 
 public interface SocialShareCallback extends SocialCallback{
-    void shareSuccess();
+    void shareSuccess(int type);
 }
 ```
 
@@ -225,6 +225,10 @@ protected void onNewIntent(Intent intent) {
 **其中对于SocialHelper的实例，可以像Demo中一样使用一个工具简单封装成单例来使用。**
 
 ### Release Log
+
+**v1.0.9:**
+
+* 分享回调增加分享类型
 
 **v1.0.8:**
 

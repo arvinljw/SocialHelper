@@ -191,7 +191,7 @@ final class WXHelper implements ISocial {
             return;
         }
 
-        initShareReceiver();
+        initShareReceiver(shareInfo);
 
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.message = createMessage(req, shareInfo.getParams());
@@ -205,7 +205,7 @@ final class WXHelper implements ISocial {
     /**
      * 分享回调
      */
-    private void initShareReceiver() {
+    private void initShareReceiver(final ShareEntity shareInfo) {
         if (wxShareReceiver == null) {
             wxShareReceiver = new BroadcastReceiver() {
                 @Override
@@ -213,7 +213,7 @@ final class WXHelper implements ISocial {
                     boolean shareSuccess = intent.getBooleanExtra(SocialHelper.KEY_WX_SHARE_CALL_BACK, false);
                     if (shareCallback != null) {
                         if (shareSuccess) {
-                            shareCallback.shareSuccess();
+                            shareCallback.shareSuccess(shareInfo.getType());
                         } else {
                             shareCallback.socialError(activity.getString(R.string.social_cancel));
                         }
