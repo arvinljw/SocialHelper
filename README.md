@@ -224,6 +224,20 @@ protected void onNewIntent(Intent intent) {
 
 **其中对于SocialHelper的实例，可以像Demo中一样使用一个工具简单封装成单例来使用。**
 
+**5、销毁**
+
+```
+@Override
+protected void onDestroy() {
+    super.onDestroy();
+    if (socialHelper != null) {
+        socialHelper.clear();
+    }
+}
+```
+
+在onDestroy方法中调用socialHelper.clear()方法，注销掉可能注册的广播以及把activity引用赋为空。
+
 ### Release Log
 
 **v1.0.9:**

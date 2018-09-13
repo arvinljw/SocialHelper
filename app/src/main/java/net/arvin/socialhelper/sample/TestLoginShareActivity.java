@@ -182,4 +182,12 @@ public class TestLoginShareActivity extends AppCompatActivity implements View.On
                 ", platform='" + info.getPlatform() + '\'' +
                 '}';
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (socialHelper != null) {
+            socialHelper.clear();
+        }
+    }
 }
