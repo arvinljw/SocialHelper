@@ -3,6 +3,7 @@ package net.arvin.socialhelper;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 
 import net.arvin.socialhelper.callback.SocialLoginCallback;
@@ -38,18 +39,21 @@ public final class SocialHelper {
     public void loginQQ(Activity activity, SocialLoginCallback callback) {
         clear();
         qqHelper = new QQHelper(activity, builder.getQqAppId());
+        qqHelper.setNeedLoginResult(builder.isNeedLoinResult());
         qqHelper.login(callback);
     }
 
     public void loginWX(Activity activity, SocialLoginCallback callback) {
         clear();
         wxHelper = new WXHelper(activity, builder.getWxAppId(), builder.getWxAppSecret());
+        wxHelper.setNeedLoginResult(builder.isNeedLoinResult());
         wxHelper.login(callback);
     }
 
     public void loginWB(Activity activity, SocialLoginCallback callback) {
         clear();
         wbHelper = new WBHelper(activity, builder.getWbAppId(), builder.getWbRedirectUrl());
+        wbHelper.setNeedLoginResult(builder.isNeedLoinResult());
         wbHelper.login(callback);
     }
 
@@ -103,7 +107,7 @@ public final class SocialHelper {
             code = KEY_WX_AUTH_CANCEL_CODE;
         }
         intent.putExtra(KEY_WX_AUTH_CODE, code);
-        context.sendBroadcast(intent);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
     /**
@@ -114,17 +118,17 @@ public final class SocialHelper {
     public void sendShareBackBroadcast(Context context, boolean success) {
         Intent intent = new Intent(WX_SHARE_RECEIVER_ACTION);
         intent.putExtra(KEY_WX_SHARE_CALL_BACK, success);
-        context.sendBroadcast(intent);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
     public void clear() {
-        if (qqHelper != null) {
-            qqHelper.onDestroy();
-            qqHelper = null;
-        }
         if (wxHelper != null) {
             wxHelper.onDestroy();
             wxHelper = null;
+        }
+        if (qqHelper != null) {
+            qqHelper.onDestroy();
+            qqHelper = null;
         }
         if (wbHelper != null) {
             wbHelper.onDestroy();
@@ -140,6 +144,8 @@ public final class SocialHelper {
 
         private String wbAppId;
         private String wbRedirectUrl;
+
+        private boolean needLoinResult;
 
         public String getQqAppId() {
             return qqAppId;
@@ -184,6 +190,15 @@ public final class SocialHelper {
         public Builder setWbRedirectUrl(String wbRedirectUrl) {
             this.wbRedirectUrl = wbRedirectUrl;
             return this;
+        }
+
+        public Builder setNeedLoinResult(boolean needLoinResult) {
+            this.needLoinResult = needLoinResult;
+            return this;
+        }
+
+        public boolean isNeedLoinResult() {
+            return needLoinResult;
         }
 
         public SocialHelper build() {

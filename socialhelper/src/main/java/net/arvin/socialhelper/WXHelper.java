@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -43,7 +44,7 @@ import java.net.URL;
  * Function：
  * Desc：
  */
-final class WXHelper implements ISocial {
+final class WXHelper implements ISocial, INeedLoginResult {
     private static final int GET_INFO_ERROR = 10000;
     private static final int GET_INFO_SUCCESS = 10001;
 
@@ -55,6 +56,7 @@ final class WXHelper implements ISocial {
     private SocialLoginCallback loginCallback;
     private BroadcastReceiver wxAuthReceiver;
     private WXInfoEntity wxInfo;
+    private boolean needLoginResult;
 
     private SocialShareCallback shareCallback;
     private BroadcastReceiver wxShareReceiver;
@@ -108,7 +110,7 @@ final class WXHelper implements ISocial {
                     getAccessToken(code);
                 }
             };
-            activity.registerReceiver(wxAuthReceiver, new IntentFilter(SocialHelper.WX_AUTH_RECEIVER_ACTION));
+            LocalBroadcastManager.getInstance(activity).registerReceiver(wxAuthReceiver, new IntentFilter(SocialHelper.WX_AUTH_RECEIVER_ACTION));
         }
     }
 
@@ -145,6 +147,9 @@ final class WXHelper implements ISocial {
         URL url = new URL("https://api.weixin.qq.com/sns/userinfo?access_token=" + wxLoginResult.getAccess_token() +
                 "&openid=" + wxLoginResult.getOpenid() + "");
         wxInfo = new Gson().fromJson(SocialUtil.get(url), WXInfoEntity.class);
+        if (isNeedLoginResult()) {
+            wxInfo.setLoginResultEntity(wxLoginResult);
+        }
         handler.sendEmptyMessage(GET_INFO_SUCCESS);
     }
 
@@ -220,7 +225,8 @@ final class WXHelper implements ISocial {
                     }
                 }
             };
-            activity.registerReceiver(wxShareReceiver, new IntentFilter(SocialHelper.WX_SHARE_RECEIVER_ACTION));
+            LocalBroadcastManager.getInstance(activity).registerReceiver(wxShareReceiver, new IntentFilter(SocialHelper.WX_SHARE_RECEIVER_ACTION));
+//            activity.registerReceiver(wxShareReceiver, new IntentFilter(SocialHelper.WX_SHARE_RECEIVER_ACTION));
         }
     }
 
@@ -382,12 +388,22 @@ final class WXHelper implements ISocial {
     public void onDestroy() {
         if (activity != null) {
             if (wxAuthReceiver != null) {
-                activity.unregisterReceiver(wxAuthReceiver);
+                LocalBroadcastManager.getInstance(activity).unregisterReceiver(wxAuthReceiver);
             }
             if (wxShareReceiver != null) {
-                activity.unregisterReceiver(wxShareReceiver);
+                LocalBroadcastManager.getInstance(activity).unregisterReceiver(wxShareReceiver);
             }
             activity = null;
         }
+    }
+
+    @Override
+    public void setNeedLoginResult(boolean needLoginResult) {
+        this.needLoginResult = needLoginResult;
+    }
+
+    @Override
+    public boolean isNeedLoginResult() {
+        return needLoginResult;
     }
 }

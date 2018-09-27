@@ -29,6 +29,8 @@ public final class WXInfoEntity {
     private String unionid;
     private List<String> privilege;
 
+    private WXLoginResultEntity loginResultEntity;
+
     public String getOpenid() {
         return openid;
     }
@@ -101,9 +103,17 @@ public final class WXInfoEntity {
         this.privilege = privilege;
     }
 
+    public WXLoginResultEntity getLoginResultEntity() {
+        return loginResultEntity;
+    }
+
+    public void setLoginResultEntity(WXLoginResultEntity loginResultEntity) {
+        this.loginResultEntity = loginResultEntity;
+    }
+
     @Override
     public String toString() {
-        return "WXUserInfoTO{" +
+        return "WXInfoEntity{" +
                 "openid='" + openid + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", sex=" + sex +
@@ -113,6 +123,7 @@ public final class WXInfoEntity {
                 ", headimgurl='" + headimgurl + '\'' +
                 ", unionid='" + unionid + '\'' +
                 ", privilege=" + privilege +
+                ", loginResultEntity=" + loginResultEntity +
                 '}';
     }
 }

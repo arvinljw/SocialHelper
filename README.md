@@ -32,17 +32,13 @@ allprojects {
 ```
 dependencies {
     ...
-    compile 'com.github.arvinljw:SocialHelper:v1.0.9'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.github.arvinljw:SocialHelper:v1.1.0'
 }
 ```
 
-*注：如果在该module中使用了v7包，那么可使用exclude命令移除本库的引用避免重复，gson也是一样，大体方法如下*
-
-```
-compile ('com.github.arvinljw:SocialHelper:v1.0.9'){
-    exclude group: 'com.android.support'
-}
-```
+*注：如果在该module中只引用了这三个第三方的包
 
 #### 使用
 
@@ -95,9 +91,21 @@ AndroidManifest.xml配置
 *注：其中需要注意的是，qq配置中<data android:scheme="tencentqqAppId"/>
 qqAppId换成您申请的qqAppId即可*
 
-微信还需要在packageName.wxapi的包下创建WXEntryActivity，具体实现可在[这里查看](app/src/main/java/net/arvin/socialhelper/sample/wxapi/WXEntryActivity.java)
+微信还需要在packageName.wxapi的包下创建WXEntryActivity，该Activity可继承**WxHelperActivity**，并传入SocialHelper的实例
 
-拷贝过去即可，注意路径，其中主要的处理是在其onResp的时候判断是登录还是分享做出相应的处理，通知本库触发回调
+```
+public class WXEntryActivity extends WXHelperActivity {
+
+    @Override
+    protected SocialHelper getSocialHelper() {
+        return SocialUtil.INSTANCE.socialHelper;
+    }
+}
+```
+
+具体实现可在[这里查看](app/src/main/java/net/arvin/socialhelper/sample/wxapi/WXEntryActivity.java)
+
+WxHelperActivity主要处理的是在其onResp的时候判断是登录还是分享做出相应的处理，通知本库触发回调。
 
 **2、获取实例**
 
@@ -110,8 +118,13 @@ socialHelper = new SocialHelper.Builder()
         .setWxAppSecret("wxAppSecret")
         .setWbAppId("wbAppKey")
         .setWbRedirectUrl("wbRedirectUrl")
+        .setNeedLoginResult(true)
         .build();
 ```
+
+其中setNeedLoginResult表示是否带有第三方登陆后的AccessToken等信息，默认是false。
+
+**返回的AccessToken等信息分别在ThirdInfoEntity里的qqInfo，wxInfo，wbInfo中的loginResultEntity中。**
 
 **3、调用相关方法**
 
@@ -159,7 +172,6 @@ public interface SocialShareCallback extends SocialCallback{
 登录成功会将封装的第三方信息返回，包含了常用的昵称，性别，头像，登录平台，更多信息也能在其中找到，详细的含义在Lib中有详细的注释；
 
 分享成功就只有一个回调，便于提示。
-
 
 **c、ShareEntity**
 
@@ -240,6 +252,14 @@ protected void onDestroy() {
 
 ### Release Log
 
+**v1.1.0:**
+
+* 增加第三方登陆返回的accessToken等信息
+* 封装微信登陆和分享回调类WxHelperActivity
+* 将微信的广播注册方式换成本地广播
+* 将v7和gson包只是编译，需要自己引入，避免重复使用
+* 调整相关包版本以及编译版本等
+
 **v1.0.9:**
 
 * 分享回调增加分享类型
@@ -294,11 +314,6 @@ protected void onDestroy() {
 ### 反馈
 
 若是有什么好的建议或者问题，请多多指教，感激不尽。
-
-待做事项
-
-* 参数解释以及对应样式的整理
-* 完善demo的代码
 
 ### License
 

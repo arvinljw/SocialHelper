@@ -1,5 +1,7 @@
 package net.arvin.socialhelper.entities;
 
+import com.sina.weibo.sdk.auth.Oauth2AccessToken;
+
 /**
  * Created by arvinljw on 17/11/27 16:59
  * Function：
@@ -70,6 +72,8 @@ public final class WBInfoEntity {
     private boolean follow_me;
     private int online_status;
     private int bi_followers_count;
+
+    private Oauth2AccessToken loginResultEntity;
 
     public String getId() {
         return id;
@@ -287,10 +291,18 @@ public final class WBInfoEntity {
         this.bi_followers_count = bi_followers_count;
     }
 
+    public Oauth2AccessToken getLoginResultEntity() {
+        return loginResultEntity;
+    }
+
+    public void setLoginResultEntity(Oauth2AccessToken loginResultEntity) {
+        this.loginResultEntity = loginResultEntity;
+    }
+
     @Override
     public String toString() {
-        return "WBUserInfoTO{" +
-                "id=" + id +
+        return "WBInfoEntity{" +
+                "id='" + id + '\'' +
                 ", idstr='" + idstr + '\'' +
                 ", screen_name='" + screen_name + '\'' +
                 ", name='" + name + '\'' +
@@ -317,6 +329,7 @@ public final class WBInfoEntity {
                 ", follow_me=" + follow_me +
                 ", online_status=" + online_status +
                 ", bi_followers_count=" + bi_followers_count +
+                ", loginResultEntity=" + loginResultEntity +
                 '}';
     }
 }

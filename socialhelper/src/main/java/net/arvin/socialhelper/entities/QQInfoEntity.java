@@ -21,6 +21,8 @@ public final class QQInfoEntity {
     private String gender;
     private String figureurl;
 
+    private QQLoginResultEntity loginResultEntity;
+
     public String getIs_yellow_year_vip() {
         return is_yellow_year_vip;
     }
@@ -133,6 +135,14 @@ public final class QQInfoEntity {
         this.figureurl = figureurl;
     }
 
+    public QQLoginResultEntity getLoginResultEntity() {
+        return loginResultEntity;
+    }
+
+    public void setLoginResultEntity(QQLoginResultEntity loginResultEntity) {
+        this.loginResultEntity = loginResultEntity;
+    }
+
     @Override
     public String toString() {
         return "QQInfoEntity{" +
@@ -150,6 +160,7 @@ public final class QQInfoEntity {
                 ", is_yellow_vip='" + is_yellow_vip + '\'' +
                 ", gender='" + gender + '\'' +
                 ", figureurl='" + figureurl + '\'' +
+                ", loginResultEntity=" + loginResultEntity +
                 '}';
     }
 }

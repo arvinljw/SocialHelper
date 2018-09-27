@@ -25,7 +25,7 @@ import net.arvin.socialhelper.entities.ThirdInfoEntity;
  * Function：
  * Desc：
  */
-final class QQHelper implements ISocial {
+final class QQHelper implements ISocial, INeedLoginResult {
     private Activity activity;
     private Tencent tencent;
     private String appId;
@@ -33,7 +33,10 @@ final class QQHelper implements ISocial {
     private SocialLoginCallback loginCallback;
     private IUiListener loginListener;
     private QQLoginResultEntity loginResult;
+    private IUiListener userInfoListener;
     private QQInfoEntity qqInfo;
+
+    private boolean needLoginResult;
 
     private SocialShareCallback shareCallback;
     private IUiListener shareListener;
@@ -115,29 +118,46 @@ final class QQHelper implements ISocial {
             return;
         }
 
+        initUserInfoListener();
+
         UserInfo info = new UserInfo(activity, tencent.getQQToken());
         info.getUserInfo(userInfoListener);
     }
 
-    private IUiListener userInfoListener = new NormalUIListener(activity, loginCallback) {
-        @Override
-        public void onComplete(Object o) {
-            try {
-                qqInfo = new Gson().fromJson(o.toString(), QQInfoEntity.class);
-                if (loginCallback != null) {
-                    loginCallback.loginSuccess(createThirdInfo());
+    private void initUserInfoListener() {
+        userInfoListener = new NormalUIListener(activity, loginCallback) {
+            @Override
+            public void onComplete(Object o) {
+                try {
+                    qqInfo = new Gson().fromJson(o.toString(), QQInfoEntity.class);
+                    if (isNeedLoginResult()) {
+                        qqInfo.setLoginResultEntity(loginResult);
+                    }
+                    if (loginCallback != null) {
+                        loginCallback.loginSuccess(createThirdInfo());
+                    }
+                    tencent.logout(activity);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                tencent.logout(activity);
-            } catch (Exception e) {
-                e.printStackTrace();
             }
-        }
-    };
+        };
+    }
 
     @Override
     public ThirdInfoEntity createThirdInfo() {
         return ThirdInfoEntity.createQQThirdInfo(loginResult.getPfkey(), tencent.getOpenId(), qqInfo.getNickname(),
                 SocialUtil.getQQSex(qqInfo.getGender()), qqInfo.getFigureurl_qq_2(), qqInfo);
+    }
+
+    @Override
+    public void setNeedLoginResult(boolean needLoginResult) {
+        this.needLoginResult = needLoginResult;
+    }
+
+    @Override
+    public boolean isNeedLoginResult() {
+        return needLoginResult;
     }
 
     /**

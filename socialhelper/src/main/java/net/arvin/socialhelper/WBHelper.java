@@ -48,7 +48,7 @@ import java.util.ArrayList;
  * Function：
  * Desc：
  */
-final class WBHelper implements ISocial {
+final class WBHelper implements ISocial, INeedLoginResult {
     private static final int GET_INFO_ERROR = 10002;
     private static final int GET_INFO_SUCCESS = 10003;
     private static final String SCOPE = "email";
@@ -59,8 +59,10 @@ final class WBHelper implements ISocial {
     private SsoHandler mSsoHandler;
 
     private SocialLoginCallback loginCallback;
+    private Oauth2AccessToken loginResult;
     private WbAuthListener wbAuthCallback;
     private WBInfoEntity wbInfo;
+    private boolean needLoginResult;
 
     private WbShareHandler shareHandler;
     private SocialShareCallback shareCallback;
@@ -116,6 +118,7 @@ final class WBHelper implements ISocial {
             @Override
             public void onSuccess(Oauth2AccessToken oauth2AccessToken) {
                 if (oauth2AccessToken.isSessionValid()) {
+                    loginResult = oauth2AccessToken;
                     AccessTokenKeeper.writeAccessToken(activity, oauth2AccessToken);
                     getUserInfo(oauth2AccessToken);
                 } else {
@@ -153,6 +156,9 @@ final class WBHelper implements ISocial {
                     }
                     URL url = new URL("https://api.weibo.com/2/users/show.json?access_token=" + accessToken.getToken() + "&uid=" + accessToken.getUid() + "");
                     wbInfo = new Gson().fromJson(SocialUtil.get(url), WBInfoEntity.class);
+                    if (isNeedLoginResult()) {
+                        wbInfo.setLoginResultEntity(loginResult);
+                    }
                     handler.sendEmptyMessage(GET_INFO_SUCCESS);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -396,5 +402,15 @@ final class WBHelper implements ISocial {
         if (activity != null) {
             activity = null;
         }
+    }
+
+    @Override
+    public void setNeedLoginResult(boolean needLoginResult) {
+        this.needLoginResult = needLoginResult;
+    }
+
+    @Override
+    public boolean isNeedLoginResult() {
+        return needLoginResult;
     }
 }
