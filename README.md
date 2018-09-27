@@ -263,7 +263,7 @@ protected void onDestroy() {
 * 将v7和gson包只是编译，需要自己引入，避免重复使用
 * 调整相关包版本以及编译版本等
 
-[历史发布日志](ReleaseLog.md)
+[历史发布日志](https://github.com/arvinljw/SocialHelper/blob/master/ReleaseLog.md)
 
 #### 混淆
 
