@@ -21,6 +21,7 @@
 allprojects {
     repositories {
         ...
+        mavenCentral()//v1.1.1新增的
         maven { url 'https://jitpack.io' }
         maven { url "https://dl.bintray.com/thelasterstar/maven/" }
     }
@@ -34,11 +35,11 @@ dependencies {
     ...
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.google.code.gson:gson:2.8.2'
-    implementation 'com.github.arvinljw:SocialHelper:v1.1.0'
+    implementation 'com.github.arvinljw:SocialHelper:v1.1.1'
 }
 ```
 
-*注：如果在该module中只引用了这三个第三方的包
+*注：该module中只引用了qq、微信、微博的第三方包*
 
 #### 使用
 
@@ -252,7 +253,9 @@ protected void onDestroy() {
 
 ### Release Log
 
-**v1.1.0:**
+**最近版本更新内容：**
+
+**v1.1.1:**
 
 * 增加第三方登陆返回的accessToken等信息
 * 封装微信登陆和分享回调类WxHelperActivity
@@ -260,25 +263,7 @@ protected void onDestroy() {
 * 将v7和gson包只是编译，需要自己引入，避免重复使用
 * 调整相关包版本以及编译版本等
 
-**v1.0.9:**
-
-* 分享回调增加分享类型
-
-**v1.0.8:**
-
-* 优化appId等参数为空是不抛异常，只打印日志，避免使用奔溃
-* 删除SocialHelper中上个版本Deprecate了的方法
-* 增加使用SocialHelper的[使用例子](https://github.com/arvinljw/SocialHelper/blob/master/app/src/main/java/net/arvin/socialhelper/sample/TestLoginShareActivity.java)，但是无法直接使用，因为各种appId不匹配，需要在自己的app中按需使用。
-
-**v1.0.7:**
-
-* 更新微信，qq，微博sdk版本
-* 调整SocialHelper中shareXX相关方法的参数顺序，老的方法Deprecated了，下个版本移除
-
-**v1.0.5:**
-
-* 第一个稳定版本，包含微信，qq，微博登录和分享
-
+[历史发布日志](ReleaseLog.md)
 
 #### 混淆
 
