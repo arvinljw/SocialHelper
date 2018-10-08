@@ -4,6 +4,8 @@
 
 这个组件在demo中是没有包含相关调用的代码的只有一些配置和使用的东西，因为应用的申请实在麻烦，但是已经在项目中测试通过了，所以可以放心使用。
 
+引用的sdk版本：**微博：v4.3.1 QQ:open\_sdk\_r6019\_lite WX:v5.1.6**
+
 ### 优点
 
 * 便捷实现第三方登录和分享及其回调
@@ -35,7 +37,7 @@ dependencies {
     ...
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.google.code.gson:gson:2.8.2'
-    implementation 'com.github.arvinljw:SocialHelper:v1.1.1'
+    implementation 'com.github.arvinljw:SocialHelper:v1.1.2'
 }
 ```
 
@@ -57,6 +59,8 @@ AndroidManifest.xml配置
 <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 ```
+
+对于6.0以上权限适配可使用我的另一个库，也封装好了的类似rxPermissions，但是没有使用rxJava。[PermissionHelper](https://github.com/arvinljw/PermissionHelper)
 
 在application下添加Activity
 
@@ -213,7 +217,7 @@ public interface SocialShareCallback extends SocialCallback{
 在调用的Activity中配置
 
 ```
-//用处：qq登录和分享回调，以及微博登录回调
+//用处：qq登录和分享回调，以及微博登录和分享回调
 @Override
 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
@@ -221,15 +225,9 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         socialHelper.onActivityResult(requestCode, resultCode, data);
     }
 }
-//用处：微博分享回调
-@Override
-protected void onNewIntent(Intent intent) {
-    super.onNewIntent(intent);
-    if (socialHelper != null) {
-        socialHelper.onNewIntent(intent);
-    }
-}
 ```
+
+*注意：`socialHelper.onNewIntent(intent);`这个方法预计在下个版本移除，该版本已废弃*
 
 至于微信的回调配置，在一开始的时候说的WXEntryActivity的onResp中的处理就是了。
 
@@ -253,7 +251,13 @@ protected void onDestroy() {
 
 ### Release Log
 
-**最近版本更新内容：**
+**最近重要版本更新内容：**
+
+**v1.1.2**
+
+* 更新sdk版本
+* 使用微博sdk缓存token，优化授权，去掉微博scope，之前版本对该字段有非空验证，目前已去掉
+* 废弃微博分享回调，调用的onNewIntent方法，直接使用onActivityResult即可，预计下个版本删除该方法
 
 **v1.1.1:**
 

@@ -42,7 +42,7 @@ android {
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     compileOnly 'com.android.support:appcompat-v7:'.concat(projectSupportVersion)
-    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.1.4'
-    api 'com.sina.weibo.sdk:core:4.2.7:openDefaultRelease@aar'
+    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.1.6'
+    api 'com.sina.weibo.sdk:core:4.3.1:openDefaultRelease@aar'
     compileOnly 'com.google.code.gson:gson:2.8.2'
 }

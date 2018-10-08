@@ -1,5 +1,10 @@
 ### Release Log
 
+**v1.1.2**
+
+* 更新sdk版本
+* 废弃微博分享回调，调用的onNewIntent方法，直接使用onActivityResult即可，预计下个版本删除该方法
+
 **v1.1.1:**
 
 * 增加第三方登陆返回的accessToken等信息

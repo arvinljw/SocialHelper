@@ -51,7 +51,7 @@ import java.util.ArrayList;
 final class WBHelper implements ISocial, INeedLoginResult {
     private static final int GET_INFO_ERROR = 10002;
     private static final int GET_INFO_SUCCESS = 10003;
-    private static final String SCOPE = "email";
+    private static final String SCOPE = "";
 
     private Activity activity;
     private String appId;
@@ -110,6 +110,9 @@ final class WBHelper implements ISocial, INeedLoginResult {
     void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (mSsoHandler != null) {
             mSsoHandler.authorizeCallBack(requestCode, resultCode, data);
+        }
+        if (shareHandler != null) {
+            shareHandler.doResultIntent(data, wbShareCallback);
         }
     }
 
@@ -371,12 +374,6 @@ final class WBHelper implements ISocial, INeedLoginResult {
             msg.thumbData = SocialUtil.bmpToByteArray(bitmap, true);
         }
         return false;
-    }
-
-    void onNewIntent(Intent intent) {
-        if (shareHandler != null) {
-            shareHandler.doResultIntent(intent, wbShareCallback);
-        }
     }
 
     private boolean notFoundFile(String filePath) {
