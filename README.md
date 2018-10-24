@@ -37,7 +37,7 @@ dependencies {
     ...
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.google.code.gson:gson:2.8.2'
-    implementation 'com.github.arvinljw:SocialHelper:v1.1.4'
+    implementation 'com.github.arvinljw:SocialHelper:v1.1.5'
 }
 ```
 
