@@ -37,11 +37,11 @@ dependencies {
     ...
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.google.code.gson:gson:2.8.2'
-    implementation 'com.github.arvinljw:SocialHelper:v1.1.2'
+    implementation 'com.github.arvinljw:SocialHelper:v1.1.3'
 }
 ```
 
-*注：该module中只引用了qq、微信、微博的第三方包*
+*注：该module中只引用了qq、微信、微博的第三方包，其中v7和gson的版本仅供参考。*
 
 #### 使用
 
@@ -252,6 +252,15 @@ protected void onDestroy() {
 ### Release Log
 
 **最近重要版本更新内容：**
+
+**v1.1.3**
+
+* 修正qq获取的unionId
+
+    之前返回的是loginResult的pfKey，若是没有申请unionId的话是获取不到正确的unionId的
+    对于qq的unionId的问题可以查看这个文档[unionid介绍](http://wiki.connect.qq.com/unionid介绍)
+    
+* 删除微博回调调用的onNewIntent方法，使用onActivityResult代替
 
 **v1.1.2**
 

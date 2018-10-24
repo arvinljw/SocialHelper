@@ -1,5 +1,14 @@
 ### Release Log
 
+**v1.1.3**
+
+* 修正qq获取的unionId
+
+    之前返回的是loginResult的pfKey，若是没有申请unionId的话是获取不到正确的unionId的
+    对于qq的unionId的问题可以查看这个文档[unionid介绍](http://wiki.connect.qq.com/unionid介绍)
+    
+* 删除微博回调调用的onNewIntent方法，使用onActivityResult代替
+
 **v1.1.2**
 
 * 更新sdk版本

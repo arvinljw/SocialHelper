@@ -148,15 +148,6 @@ public class TestLoginShareActivity extends AppCompatActivity implements View.On
         }
     }
 
-    //用处：微博分享回调
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        if (socialHelper != null) {
-            socialHelper.onNewIntent(intent);
-        }
-    }
-
     @Override
     public void loginSuccess(ThirdInfoEntity info) {
         tvLoginInfo.setText(toString(info));

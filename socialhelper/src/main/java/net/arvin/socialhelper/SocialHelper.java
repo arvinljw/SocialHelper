@@ -88,15 +88,6 @@ public final class SocialHelper {
     }
 
     /**
-     * 微博分享需要在其当前的activity中的onNewIntent中调用该方法
-     * 该方法在本库更新到v1.1.2时废弃，因为微博的sdk4.3.1demo中分享不再使用，而是直接使用onActivityResult回调
-     * 预计下个版本删除该方法
-     */
-    @Deprecated
-    public void onNewIntent(Intent intent) {
-    }
-
-    /**
      * 微信登录，在微信回调到WXEntryActivity的onResp方法中调用
      *
      * @param code 空表示失败，正常就是有值的

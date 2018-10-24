@@ -5,6 +5,7 @@
     <string name="social_share_error">分享失败</string>
     <string name="social_error">获取信息失败</string>
     <string name="social_qq_uninstall">QQ未安装</string>
+    <string name="social_qq_unionid_not_set">未申请unionId</string>
     <string name="social_wx_uninstall">微信未安装</string>
     <string name="social_wb_uninstall">微博未安装</string>
     <string name="social_img_not_found">分享图片未找到</string>

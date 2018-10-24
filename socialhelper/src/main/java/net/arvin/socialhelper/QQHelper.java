@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.tencent.connect.UnionInfo;
 import com.tencent.connect.UserInfo;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
@@ -17,6 +18,7 @@ import net.arvin.socialhelper.callback.SocialLoginCallback;
 import net.arvin.socialhelper.callback.SocialShareCallback;
 import net.arvin.socialhelper.entities.QQInfoEntity;
 import net.arvin.socialhelper.entities.QQLoginResultEntity;
+import net.arvin.socialhelper.entities.QQUnionIdEntity;
 import net.arvin.socialhelper.entities.ShareEntity;
 import net.arvin.socialhelper.entities.ThirdInfoEntity;
 
@@ -34,7 +36,11 @@ final class QQHelper implements ISocial, INeedLoginResult {
     private IUiListener loginListener;
     private QQLoginResultEntity loginResult;
     private IUiListener userInfoListener;
+    private IUiListener unionIdListener;
     private QQInfoEntity qqInfo;
+    private QQUnionIdEntity unionIdInfo;
+    private boolean unionIdOk;
+    private boolean qqInfoOk;
 
     private boolean needLoginResult;
 
@@ -117,11 +123,35 @@ final class QQHelper implements ISocial, INeedLoginResult {
         if (!tencent.isSessionValid()) {
             return;
         }
+        initUnionIdListener();
+        UnionInfo unionInfo = new UnionInfo(activity, tencent.getQQToken());
+        unionInfo.getUnionId(unionIdListener);
 
         initUserInfoListener();
-
         UserInfo info = new UserInfo(activity, tencent.getQQToken());
         info.getUserInfo(userInfoListener);
+    }
+
+    private void initUnionIdListener() {
+        unionIdListener = new NormalUIListener(activity, loginCallback) {
+            @Override
+            public void onComplete(Object o) {
+                try {
+                    unionIdInfo = new Gson().fromJson(o.toString(), QQUnionIdEntity.class);
+                    if (unionIdInfo.getError() == 100048) {
+                        String unionIdNotSet = activity.getResources().getString(R.string.social_qq_unionid_not_set);
+                        Log.d("QQHelper", unionIdNotSet);
+                    }
+                    if (TextUtils.isEmpty(unionIdInfo.getUnionid())) {
+                        unionIdInfo.setUnionid("unionId not apply");
+                    }
+                    unionIdOk = true;
+                    loginOk();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
     }
 
     private void initUserInfoListener() {
@@ -133,10 +163,8 @@ final class QQHelper implements ISocial, INeedLoginResult {
                     if (isNeedLoginResult()) {
                         qqInfo.setLoginResultEntity(loginResult);
                     }
-                    if (loginCallback != null) {
-                        loginCallback.loginSuccess(createThirdInfo());
-                    }
-                    tencent.logout(activity);
+                    qqInfoOk = true;
+                    loginOk();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -144,9 +172,18 @@ final class QQHelper implements ISocial, INeedLoginResult {
         };
     }
 
+    private synchronized void loginOk() {
+        if (qqInfoOk && unionIdOk) {
+            if (loginCallback != null) {
+                loginCallback.loginSuccess(createThirdInfo());
+            }
+            tencent.logout(activity);
+        }
+    }
+
     @Override
     public ThirdInfoEntity createThirdInfo() {
-        return ThirdInfoEntity.createQQThirdInfo(loginResult.getPfkey(), tencent.getOpenId(), qqInfo.getNickname(),
+        return ThirdInfoEntity.createQQThirdInfo(unionIdInfo.getUnionid(), tencent.getOpenId(), qqInfo.getNickname(),
                 SocialUtil.getQQSex(qqInfo.getGender()), qqInfo.getFigureurl_qq_2(), qqInfo);
     }
 
