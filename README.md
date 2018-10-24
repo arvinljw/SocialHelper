@@ -23,7 +23,7 @@
 allprojects {
     repositories {
         ...
-        mavenCentral()//v1.1.1新增的
+        mavenCentral()
         maven { url 'https://jitpack.io' }
         maven { url "https://dl.bintray.com/thelasterstar/maven/" }
     }
@@ -37,7 +37,7 @@ dependencies {
     ...
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.google.code.gson:gson:2.8.2'
-    implementation 'com.github.arvinljw:SocialHelper:v1.1.6'
+    implementation 'com.github.arvinljw:SocialHelper:v1.1.2'
 }
 ```
 
@@ -253,7 +253,7 @@ protected void onDestroy() {
 
 **最近重要版本更新内容：**
 
-**v1.1.6**
+**v1.2.0** not publish
 
 * 修正qq获取的unionId
 

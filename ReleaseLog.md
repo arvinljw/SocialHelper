@@ -1,6 +1,6 @@
 ### Release Log
 
-**v1.1.6**
+**v1.2.0** not publish
 
 * 修正qq获取的unionId
 
