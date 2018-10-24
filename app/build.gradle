@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion projectCompileSdkVersion as int
+    compileSdkVersion 28
     defaultConfig {
-        applicationId projectApplicationId
-        minSdkVersion projectMinSdkVersion as int
-        targetSdkVersion projectTargetSdkVersion as int
+        applicationId "net.arvin.socialhelper.sample"
+        minSdkVersion 14
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
     }
@@ -20,7 +20,8 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    implementation 'com.android.support:appcompat-v7:'.concat(projectSupportVersion)
+    implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation project(':socialhelper')
+//    implementation 'com.github.arvinljw:SocialHelper:v1.1.5'
 }

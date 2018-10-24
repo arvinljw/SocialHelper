@@ -4,11 +4,11 @@ apply plugin: 'com.github.dcendents.android-maven'
 group='com.github.arvinljw'
 
 android {
-    compileSdkVersion projectCompileSdkVersion as int
+    compileSdkVersion 28
 
     defaultConfig {
-        minSdkVersion projectMinSdkVersion as int
-        targetSdkVersion projectTargetSdkVersion as int
+        minSdkVersion 14
+        targetSdkVersion 28
     }
     buildTypes {
         release {
@@ -16,22 +16,26 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     // build a jar with source files
     task sourcesJar(type: Jar) {
         from android.sourceSets.main.java.srcDirs
         classifier = 'sources'
     }
+
     task javadoc(type: Javadoc) {
         failOnError  false
         source = android.sourceSets.main.java.sourceFiles
         classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
         classpath += configurations.compile
     }
-// build a jar with javadoc
+
+    // build a jar with javadoc
     task javadocJar(type: Jar, dependsOn: javadoc) {
         classifier = 'javadoc'
         from javadoc.destinationDir
     }
+
     artifacts {
         archives sourcesJar
         archives javadocJar
@@ -41,7 +45,7 @@ android {
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
-    compileOnly 'com.android.support:appcompat-v7:'.concat(projectSupportVersion)
+    compileOnly 'com.android.support:appcompat-v7:28.0.0'
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.1.6'
     api 'com.sina.weibo.sdk:core:4.3.1:openDefaultRelease@aar'
     compileOnly 'com.google.code.gson:gson:2.8.2'
