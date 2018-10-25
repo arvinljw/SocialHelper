@@ -37,7 +37,7 @@ dependencies {
     ...
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.google.code.gson:gson:2.8.2'
-    implementation 'com.github.arvinljw:SocialHelper:v1.1.2'
+    implementation 'com.github.arvinljw:SocialHelper:v1.2.0'
 }
 ```
 
@@ -253,7 +253,7 @@ protected void onDestroy() {
 
 **最近重要版本更新内容：**
 
-**v1.2.0** not publish
+**v1.2.0**
 
 * 修正qq获取的unionId
 
