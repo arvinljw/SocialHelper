@@ -9,6 +9,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.tencent.connect.UnionInfo;
 import com.tencent.connect.UserInfo;
+import com.tencent.connect.share.QzonePublish;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
@@ -215,6 +216,8 @@ final class QQHelper implements ISocial, INeedLoginResult {
         initShareListener(shareInfo);
         if (shareInfo.getType() == ShareEntity.TYPE_QQ) {
             tencent.shareToQQ(activity, shareInfo.getParams(), shareListener);
+        } else if (shareInfo.getType() == ShareEntity.TYPE_Q_ZONE_PUBLISH) {
+            tencent.publishToQzone(activity, shareInfo.getParams(), shareListener);
         } else {
             tencent.shareToQzone(activity, shareInfo.getParams(), shareListener);
         }
