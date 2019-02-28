@@ -143,7 +143,7 @@ public class TestLoginShareActivity extends AppCompatActivity implements View.On
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data != null && socialHelper != null) {//qq分享如果选择留在qq，通过home键退出，再进入app则不会有回调
+        if (socialHelper != null) {//qq分享如果选择留在qq，通过home键退出，再进入app则不会有回调
             socialHelper.onActivityResult(requestCode, resultCode, data);
         }
     }

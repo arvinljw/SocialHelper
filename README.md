@@ -221,7 +221,7 @@ public interface SocialShareCallback extends SocialCallback{
 @Override
 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    if (data != null && socialHelper != null) {//qq分享如果选择留在qq，通过home键退出，再进入app则不会有回调
+    if (socialHelper != null) {//qq分享如果选择留在qq，通过home键退出，再进入app则不会有回调
         socialHelper.onActivityResult(requestCode, resultCode, data);
     }
 }
@@ -261,6 +261,7 @@ protected void onDestroy() {
     对于qq的unionId的问题可以查看这个文档[unionId介绍](http://wiki.connect.qq.com/unionid介绍)
     
 * 删除微博回调调用的onNewIntent方法，使用onActivityResult代替
+* 在demo中移除data为空的限制，这样才能获取到已取消的检测
 
 **v1.1.2**
 
