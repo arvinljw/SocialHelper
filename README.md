@@ -4,7 +4,7 @@
 
 这个组件在demo中是没有包含相关调用的代码的只有一些配置和使用的东西，因为应用的申请实在麻烦，但是已经在项目中测试通过了，所以可以放心使用。
 
-引用的sdk版本：**微博：v4.3.1 QQ:open\_sdk\_r6019\_lite WX:v5.1.6**
+引用的sdk版本：**微博：v4.3.6 QQ:open\_sdk\_r6019\_lite WX:v5.1.6**
 
 ### 优点
 
@@ -37,7 +37,7 @@ dependencies {
     ...
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.google.code.gson:gson:2.8.2'
-    implementation 'com.github.arvinljw:SocialHelper:v1.2.0'
+    implementation 'com.github.arvinljw:SocialHelper:v1.2.1'
 }
 ```
 
@@ -191,6 +191,9 @@ public interface SocialShareCallback extends SocialCallback{
     * createMusicInfo 音乐信息
     * createAppInfo 应用信息
     * createImageTextInfoToQZone 图文信息到QQ空间
+    * createPublishTextToQZone 文字说说
+    * createPublishImageToQZone 图片说说
+    * createPublishVideoToQZone 视频说说
     
 * WXShareEntity
 
@@ -252,6 +255,11 @@ protected void onDestroy() {
 ### Release Log
 
 **最近重要版本更新内容：**
+
+**v1.2.1**
+
+* 增加qq分享到说说
+* 更新微博sdk版本到4.3.6
 
 **v1.2.0**
 

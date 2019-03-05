@@ -23,6 +23,7 @@ import java.util.ArrayList;
 public class TestLoginShareActivity extends AppCompatActivity implements View.OnClickListener, SocialLoginCallback, SocialShareCallback {
     private String imgUrl = "https://upload-images.jianshu.io/upload_images/3157525-afe6f0ba902eb523.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240";
     private String localImgUrl = "/storage/emulated/0/DCIM/Camera/IMG_20180422_113944.jpg";
+    private String localVideoUrl = "/storage/emulated/0/893.mp4";
     private String title = "个人博客";
     private String summary = "好好学习";
     private String targetUrl = "https://arvinljw.github.io";
@@ -97,6 +98,15 @@ public class TestLoginShareActivity extends AppCompatActivity implements View.On
                 imgUrls.add(imgUrl);
                 shareEntity = QQShareEntity.createImageTextInfoToQZone(title, targetUrl,
                         imgUrls, summary, "ni6");
+
+                //文字说说
+//                shareEntity = QQShareEntity.createPublishTextToQZone("好好学习");
+                //图片说说，本地文件
+//                imgUrls.clear();
+//                imgUrls.add(localImgUrl);
+//                shareEntity = QQShareEntity.createPublishImageToQZone(imgUrls);
+                //视频说说，本地视频，大小限制见方法注释
+//                shareEntity = QQShareEntity.createPublishVideoToQZone(localVideoUrl);
                 break;
         }
         return shareEntity;

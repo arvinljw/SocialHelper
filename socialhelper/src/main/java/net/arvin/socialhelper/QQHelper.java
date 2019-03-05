@@ -215,6 +215,8 @@ final class QQHelper implements ISocial, INeedLoginResult {
         initShareListener(shareInfo);
         if (shareInfo.getType() == ShareEntity.TYPE_QQ) {
             tencent.shareToQQ(activity, shareInfo.getParams(), shareListener);
+        } else if (shareInfo.getType() == ShareEntity.TYPE_PUBLISH) {
+            tencent.publishToQzone(activity, shareInfo.getParams(), shareListener);
         } else {
             tencent.shareToQzone(activity, shareInfo.getParams(), shareListener);
         }
