@@ -127,7 +127,7 @@ socialHelper = new SocialHelper.Builder()
         .build();
 ```
 
-其中setNeedLoginResult表示是否带有第三方登陆后的AccessToken等信息，默认是false。
+其中setNeedLoginResult表示是否带有第三方登录后的AccessToken等信息，默认是false。
 
 **返回的AccessToken等信息分别在ThirdInfoEntity里的qqInfo，wxInfo，wbInfo中的loginResultEntity中。**
 
@@ -283,8 +283,8 @@ protected void onDestroy() {
 
 **v1.1.1:**
 
-* 增加第三方登陆返回的accessToken等信息
-* 封装微信登陆和分享回调类WxHelperActivity
+* 增加第三方登录返回的accessToken等信息
+* 封装微信登录和分享回调类WxHelperActivity
 * 将微信的广播注册方式换成本地广播
 * 将v7和gson包只是编译，需要自己引入，避免重复使用
 * 调整相关包版本以及编译版本等
